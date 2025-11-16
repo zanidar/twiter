@@ -1,0 +1,50 @@
+[
+  {
+    "name": "auth_token",
+    "value": "66dc2a311eee7289da6164f93c7e2b48e5d4354c",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-05-14T12:33:00.800Z",
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ct0",
+    "value": "ea3b57c48d9ab48ffe66995f9edf01b1e5b0a1cbecfc86cee484daadfe9f1b36c68cce71ad24b7f15b88a376aacc3768db1d75fab2e4b70ec7179a161aa0146d87176765116f778c4c45d49ba33be24b",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-05-14T12:33:01.190Z",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "__cf_bm",
+    "value": "8kvi7eNDtJ2gLHcOZjSa5lWuh9sV.4q7lt5X3wEPLPM-1763211124.8523808-1.0.1.1-BHj8vGK94CFLi1vP7GVg5_Bxj6doURsCC7UoE2TkUVkoWVo9sX3Y_Id2yjVcfbfqDIhds07sytc6ptqZRCQlDcV4H2ceWxWl6H6Fonoxw2zPNfsTRIghYivBhQfF3viP",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2025-11-15T13:06:34.668Z",
+    "httpOnly": true,
+    "secure": true
+  },
+  {
+    "name": "twid",
+    "value": "u%3D1872427630030626817",
+    "domain": ".x.com",
+    "path": "/",
+    "expires": "2026-05-14T12:33:18.482Z",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "lang",
+    "value": "en",
+    "domain": "x.com",
+    "path": "/",
+    "expires": null,
+    "httpOnly": false,
+    "secure": false
+  }
+]
