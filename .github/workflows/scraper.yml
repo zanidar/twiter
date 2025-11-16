@@ -1,0 +1,37 @@
+name: Ejecutar scraper
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # Cada 6 horas
+  workflow_dispatch:         # Permite ejecutarlo manualmente
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar Firefox y GeckoDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox-esr
+          GECKO_VERSION=$(curl --silent https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+          wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/geckodriver-$GECKO_VERSION-linux64.tar.gz
+          tar -xvzf geckodriver-*-linux64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+
+      - name: Instalar Python y dependencias
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install selenium
+
+      - name: Ejecutar el scraper
+        run: python3 scraper.py
+
+      - name: Subir resultados como artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: tweets
+          path: tweets_guardados.txt
