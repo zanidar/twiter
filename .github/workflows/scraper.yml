@@ -1,5 +1,5 @@
 name: Ejecutar scraper
-
+ 
 on:
   schedule:
     - cron: "0 0 * * 0"   # UNA VEZ A LA SEMANA (domingo 00:00 UTC)
