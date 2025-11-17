@@ -36,9 +36,7 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install selenium
 
-      - name: Restaurar cookies.json desde secret (opcional)
-        run: echo "${{ secrets.COOKIES_JSON }}" > cookies.json
-        if: ${{ secrets.COOKIES_JSON != '' }}
+      
 
       - name: Ejecutar scraper
         run: python3 scraper.py
