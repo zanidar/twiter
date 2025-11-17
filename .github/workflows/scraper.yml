@@ -39,7 +39,7 @@ jobs:
       
 
       - name: Ejecutar scraper
-        run: python3 scraper.py
+        run: python3 twiter.py
 
       - name: Subir archivo de salida
         uses: actions/upload-artifact@v4
