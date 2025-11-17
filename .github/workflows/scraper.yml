@@ -2,36 +2,50 @@ name: Ejecutar scraper
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # Cada 6 horas
-  workflow_dispatch:         # Permite ejecutarlo manualmente
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio
-        uses: actions/checkout@v3
 
-      - name: Instalar Firefox y GeckoDriver
+      - name: Clonar repo
+        uses: actions/checkout@v4
+
+      - name: Instalar Firefox (oficial de Mozilla)
         run: |
           sudo apt-get update
-          sudo apt-get install -y firefox-esr
+          sudo apt-get install -y wget tar
+          wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+          tar -xvf firefox.tar.bz2
+          sudo mv firefox /opt/firefox
+          sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
+
+      - name: Instalar GeckoDriver
+        run: |
           GECKO_VERSION=$(curl --silent https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep "tag_name" | cut -d '"' -f 4)
           wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/geckodriver-$GECKO_VERSION-linux64.tar.gz
           tar -xvzf geckodriver-*-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/geckodriver
 
-      - name: Instalar Python y dependencias
+      - name: Instalar dependencias Python
         run: |
           python3 -m pip install --upgrade pip
           pip install selenium
 
-      - name: Ejecutar el scraper
+      - name: Restaurar cookies.json desde secret (opcional)
+        run: echo "${{ secrets.COOKIES_JSON }}" > cookies.json
+        if: ${{ secrets.COOKIES_JSON != '' }}
+
+      - name: Ejecutar scraper
         run: python3 scraper.py
 
-      - name: Subir resultados como artefacto
+      - name: Subir archivo de salida
         uses: actions/upload-artifact@v4
         with:
-          name: tweets
+          name: tweets_guardados
           path: tweets_guardados.txt
+
