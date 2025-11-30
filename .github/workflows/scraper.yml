@@ -23,11 +23,17 @@ jobs:
           sudo mv firefox /opt/firefox
           sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
 
-      - name: Instalar GeckoDriver
+      - name: Instalar jq
+        run: sudo apt-get install -y jq
+
+      - name: Instalar GeckoDriver (corregido)
         run: |
-          GECKO_VERSION=$(curl --silent https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-          wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/geckodriver-$GECKO_VERSION-linux64.tar.gz
-          tar -xvzf geckodriver-*-linux64.tar.gz
+          GECKO_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
+          echo "Usando Geckodriver: $GECKO_VERSION"
+
+          wget -q "https://github.com/mozilla/geckodriver/releases/download/${GECKO_VERSION}/geckodriver-${GECKO_VERSION}-linux64.tar.gz"
+
+          tar -xzf "geckodriver-${GECKO_VERSION}-linux64.tar.gz"
           sudo mv geckodriver /usr/local/bin/
           sudo chmod +x /usr/local/bin/geckodriver
 
@@ -35,8 +41,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip install selenium
-
-      
 
       - name: Ejecutar scraper
         run: python3 twiter.py
